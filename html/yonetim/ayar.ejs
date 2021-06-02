@@ -1,0 +1,173 @@
+<%- include('../ek/header', {bot, user, path}) %>
+
+<% let sw = bot.guilds.cache.get(id) %>
+
+<div>
+<center>
+  <img style="margin-top: 80px; border-radius: 150px;" src="<%= bot.guilds.cache.get(id).iconURL() %>">
+  <p style="color: #fff; margin-top: 30px; font-family: 'Quicksand', black; font-size: 30px;"><b><%= bot.guilds.cache.get(id).name %><b></p>
+    <p style="color: #fff; margin-top: 30px; font-family: 'Quicksand'; font-size: 20px;">Ayarlarınızı aşağıdan ayarlıyabilirsinz.</p>
+</center>
+
+<hr style="margin-top: 60px; width: 70%; border-style: solid;color: rgb(151 ,151, 151, 0.3); border-width: 2px; opacity:;" />
+</div>
+<br>
+
+<form method="post" style="color:#fff;">
+<div>
+   <p style="color: #0561ff; margin-top: 80px; margin-left: 100px; font-family: 'Quicksand'; font-size: 25px;"><i class="fas fa-user-tag"></i>
+ Otorol Ayarla</p> <p style="color: #fff; margin-top: -20px; margin-left: 140px; font-family: 'Quicksand'; font-size: 20px;">Otorol sunucunuza girenlere otomatik olarak rol verir.</p>
+
+<a data-toggle="collapse" href="#otorol" role="button" aria-expanded="false" aria-controls="otorol" href="#otorol" type="button" style="margin-left: 1160px; margin-top: -65px; text-align: center; line-height:44px; font-family: 'Quicksand', black; font-size: 18px; color: #fff;" class="div hot"> <i class="fas fa-cogs"></i> AYARLA</a>
+
+<div class="collapse" id="otorol">
+   <div class="form-row">
+
+    <div class="form-group col-md-4">
+      <label for="inputState">Otorol Kanalı</label>
+   <select id="otorol-kanal" name="otorol-kanal" class="form-control">
+        <option selected disabled>Bir Kanal Seç!</option>
+        <% sw.channels.cache.filter(a => a.type === "text").map(id => { %>
+   <option value="<%=id.id%>"><%=id.name%></option>
+        <% }) %>
+      </select>
+    </div>
+     <div class="form-group col-md-4">
+      <label for="inputState">Otorol Rolü</label>
+      <select id="otorol-rol" name="otorol-rol" class="form-control">
+        <option selected disabled>Bir Rol Seç!</option>
+        <% sw.roles.cache.filter(a => !a.managed).filter(a => a.name !== "@everyone").map(id => { %>
+   <option value="<%=id.id%>"><%=id.name%></option>
+        <% }) %>
+      </select>
+    </div>
+     <div class="form-group col-md-4">
+      <label for="inputState">Otorol Bot Rolü</label>
+      <select id="otorol-botrol" name="otorol-botrol" class="form-control">
+        <option selected disabled>Bir Rol Seç!</option>
+        <% sw.roles.cache.filter(a => !a.managed).filter(a => a.name !== "@everyone").map(id => { %>
+   <option value="<%=id.id%>"><%=id.name%></option>
+        <% }) %>
+      </select>
+    </div>
+  </div></div>
+
+</div>
+
+<div>
+  <p style="color: #0561ff; margin-top: 80px; margin-left: 100px; font-family: 'Quicksand'; font-size: 25px;"><i class="fas fa-user-tag"></i>
+ Sayaç Ayarla</p> <p style="color: #fff; margin-top: -20px; margin-left: 140px; font-family: 'Quicksand'; font-size: 20px;">Sunucunuza girip çıkanları belirli bir kanala sayar.</p>
+
+<a data-toggle="collapse" href="#sayac" role="button" aria-expanded="false" aria-controls="sayac" href="#sayac" type="button" style="margin-left: 1160px; margin-top: -65px; text-align: center; line-height:44px; font-family: 'Quicksand', black; font-size: 18px; color: #fff;" class="div hot"> <i class="fas fa-cogs"></i> AYARLA</a>
+<div class="collapse" id="sayac" style="margin-left: 300px;">
+  <div class="form-row">
+  <div class="form-group col-md-4">
+  <center>
+
+      <label for="inputState">Sayaç Kanalı</label>
+      <select id="sayac-kanal" name="sayac-kanal" class="form-control">
+        <option selected disabled>Bir Kanal Belirle!</option>
+        <% sw.channels.cache.filter(a => a.type === "text").map(id => { %>
+   <option value="<%=id.id%>"><%=id.name%></option>
+        <% }) %>
+      </select>
+    </div>
+     <div class="form-group col-md-2">
+      <label for="inputZip">Sayaç Hedefi</label>
+        </center>
+
+      <input type="number" class="form-control" name="sayac-hedef" id="sayac-hedef" min="<%= sw.memberCount + 1 %>" placeholder="Bir hedef belirle">
+    </div>
+  </div>
+  </div>
+</div>
+<div>
+  <p style="color: #0561ff; margin-top: 80px; margin-left: 100px; font-family: 'Quicksand'; font-size: 25px;"><i class="fas fa-user-tag"></i>
+ HG-BB Ayarla</p> <p style="color: #fff; margin-top: -20px; margin-left: 140px; font-family: 'Quicksand'; font-size: 20px;">Hoşgeldin görüşürüz sunucuya gelenleri çıkanları belirlene kanala atar.</p>
+
+<a data-toggle="collapse" href="#hgbb" role="button" aria-expanded="false" aria-controls="hgbb" href="#hgbb" type="button" style="margin-left: 1160px; margin-top: -65px; text-align: center; line-height:44px; font-family: 'Quicksand', black; font-size: 18px; color: #fff;" class="div hot"> <i class="fas fa-cogs"></i> AYARLA</a>
+<div class="collapse" id="hgbb">
+ 
+  <div class="form-row"  style="margin-left: 300px;">
+  <div class="form-group col-md-4">
+      <label for="inputState">HGBB Kanalı</label>
+      <select id="hgbb-kanal" name="hgbb-kanal" class="form-control">
+        <option selected disabled>Bir Kanal Belirle!</option>
+        <% sw.channels.cache.filter(a => a.type === "text").map(id => { %>
+   <option value="<%=id.id%>"><%=id.name%></option>
+        <% }) %>
+      </select>
+    </div>
+</div>
+  </div>
+   <button type="submit" id="testbutton"></button>
+<br>
+
+</form>
+<br>
+
+<style>
+
+#testbutton {
+  width: 150px;
+  height:50px;
+  border-radius:180px;
+  position:relative;
+  left:calc(50% - 75px);
+  top:calc(10% - 25px);
+  background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+  cursor:pointer;
+  line-height:12px;
+}
+
+#testbutton:before {
+  content:'';
+  z-index:1;
+  position:absolute;
+  display:block;
+  width:80%;
+  height:70%;
+  top:15%;
+  left:10%;
+  transition: 0.3s opacity ease-in-out;
+  filter:blur(15px);
+  opacity:0;
+  background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+}
+
+#testbutton:hover:before {
+  opacity:1;
+  transition: 0.3s opacity ease-in-out;
+  filter:blur(25px);
+  background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);  
+}
+
+#testbutton:after {
+  content:'Kaydet';
+  text-align:center;
+  line-height:40px;
+  font-size:18px;
+  color:rgba(235,235,235,1);
+  font-weight:bold;
+  z-index:5;
+  position:absolute;
+  display:block;
+  border-radius:180px;
+  width:92%;
+  height:80%;
+  top:10%;
+  left:4%;  
+}
+
+.night  { position: relative; 
+	        background:linear-gradient( to bottom right,rgba(63,81,181,1) 0%, rgba(171,71,188 ,1) 70%);
+	        box-shadow: 1px 1px 30px rgba(81,45,168 ,1);}
+
+
+.div     { width: 200px; height: 44px; border-radius: 6px; }
+
+.hot    { position: relative; 
+	        background:linear-gradient( to top right, rgba(255,87,34,1) 0%, rgba(251,140,0 ,1) 100%);.
+</style>
+
+<%- include('.././ek/footer.ejs') %>
